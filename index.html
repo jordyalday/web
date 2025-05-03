@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recomendaciones de Comida Peruana</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fffdf5;
+      color: #333;
+    }
+
+    header {
+      background-color: #e63946;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .intro {
+      padding: 20px;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .section-card {
+      background: #f1faee;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .section-card:hover {
+      transform: scale(1.02);
+    }
+
+    .section-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .section-card h2 {
+      margin-top: 0;
+    }
+
+    .finder {
+      text-align: center;
+      margin: 40px 20px;
+      background-color: #fcefee;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .finder select, .finder button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+
+    .info {
+      margin-top: 10px;
+    }
+
+    footer {
+      background-color: #e63946;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Recomendaciones de Comida Peruana</h1>
+    <p>Explora los mejores lugares para disfrutar en familia</p>
+  </header>
+
+  <div class="intro">
+    <p>Bienvenido a esta página web en la cual vas a encontrar diversos planes para compartir en familia y comer lo más apetitoso posible. Te recomendamos ver las siguientes opciones.</p>
+  </div>
+
+  <div class="sections">
+    <div class="section-card">
+      <img src="https://images.unsplash.com/photo-1625944206943-b49cc1d4472c" alt="Comida marina">
+      <h2>Comida Marina</h2>
+      <p>Deliciosos platos como ceviche, arroz con mariscos y más, perfectos para los amantes del mar.</p>
+    </div>
+
+    <div class="section-card">
+      <img src="https://images.unsplash.com/photo-1617191517004-0e8e4ea06546" alt="Comida criolla">
+      <h2>Comida Criolla</h2>
+      <p>Sabores tradicionales como el lomo saltado, ají de gallina y más, con el toque casero peruano.</p>
+    </div>
+
+    <div class="section-card">
+      <img src="https://images.unsplash.com/photo-1606787366850-de6330128bfc" alt="Comida norteña">
+      <h2>Comida Norteña</h2>
+      <p>Platos típicos del norte como el seco de cabrito, arroz con pato y otros que no te puedes perder.</p>
+    </div>
+  </div>
+
+  <div class="finder">
+    <h2>Busca lugares cerca de ti</h2>
+    <p>Selecciona el tipo de comida que deseas y encuentra restaurantes cercanos.</p>
+    <select id="comida">
+      <option value="comida marina">Comida Marina</option>
+      <option value="comida criolla">Comida Criolla</option>
+      <option value="comida norteña">Comida Norteña</option>
+    </select>
+    <button onclick="buscarLugares()">Buscar cerca de mí</button>
+    <div class="info" id="info"></div>
+  </div>
+
+  <footer>
+    © 2025 Recomendaciones de Comida Peruana. Todos los derechos reservados.
+  </footer>
+
+  <script>
+    function buscarLugares() {
+      const tipo = document.getElementById("comida").value;
+      const info = document.getElementById("info");
+
+      if (navigator.geolocation) {
+        info.innerText = "Buscando ubicación...";
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(tipo)}/@${lat},${lon},15z`;
+          info.innerHTML = `
+            <p><strong>Resultado:</strong> <a href="${mapsUrl}" target="_blank">Ver "${tipo}" cerca de ti en Google Maps</a></p>
+          `;
+        }, function(error) {
+          info.innerText = "No se pudo obtener tu ubicación.";
+        });
+      } else {
+        info.innerText = "Tu navegador no admite geolocalización.";
+      }
+    }
+  </script>
+
+</body>
+</html>
